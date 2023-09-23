@@ -4,8 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "*"
-ray = {extras = ["default"], version = "*"}
+ray = {version = "*", extras = ["default"]}
 python-dotenv = "*"
 pyarrow = "*"
 langchain = "*"
@@ -13,10 +12,9 @@ matplotlib = "*"
 bs4 = "*"
 tqdm = "*"
 sentence-transformers = "*"
-pytorch = "*"
-torchvision = "*"
+pandas = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.10"

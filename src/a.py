@@ -1,7 +1,7 @@
 import os
 import ray
 raydocs_root="/tmp/raydocs"
-num_cpus=2
+num_cpus=4
 num_gpus=0
 from pathlib import Path
 
@@ -119,7 +119,10 @@ sample_section = sections_ds.take(1)[0]
 chunks = text_splitter.create_documents(
             texts=[sample_section["text"]], 
                 metadatas=[{"source": sample_section["source"]}])
+print("=============================")
+print("chunk[0] content:")
 print (chunks[0])
+print("=============================")
 
 
 
@@ -172,10 +175,11 @@ class EmbedChunks:
         else:
             self.embedding_model = HuggingFaceEmbeddings(
                 model_name=model_name,
-                model_kwargs={"device": "cuda"},
-                encode_kwargs={"device": "cuda", "batch_size": 100})
+                model_kwargs={"device": "cpu"},
+                encode_kwargs={"device": "cpu", "batch_size": 100})
     
     def __call__(self, batch):
+        print("\ncall EmbedChunks\n")
         embeddings = self.embedding_model.embed_documents(batch["text"])
         return {"text": batch["text"], "source": batch["source"], "embeddings": embeddings}
 
@@ -187,7 +191,7 @@ embedded_chunks = chunks_ds.map_batches(
                 fn_constructor_kwargs={"model_name": embedding_model_name},
                     batch_size=100, 
                         num_gpus=num_gpus,
-                            compute=ActorPoolStrategy(size=2))
+                            compute=ActorPoolStrategy(size=4))
 
 
 
