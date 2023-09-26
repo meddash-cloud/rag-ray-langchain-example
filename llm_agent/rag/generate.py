@@ -6,9 +6,9 @@ from pathlib import Path
 
 import numpy as np
 import openai
-import psycopg
+import psycopg2
 from IPython.display import JSON, clear_output, display
-from pgvector.psycopg import register_vector
+from pgvector.psycopg2 import register_vector
 from tqdm import tqdm
 
 from rag.config import ROOT_DIR
@@ -68,7 +68,7 @@ def generate_response(
 
 def get_sources_and_context(query, embedding_model, num_chunks):
     embedding = np.array(embedding_model.embed_query(query))
-    with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+    with psycopg2.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
         register_vector(conn)
         with conn.cursor() as cur:
             cur.execute(

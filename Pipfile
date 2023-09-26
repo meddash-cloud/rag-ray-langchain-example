@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-ray = {version = "*", extras = ["default"]}
 python-dotenv = "*"
 pyarrow = "*"
 langchain = "*"
@@ -13,6 +12,14 @@ bs4 = "*"
 tqdm = "*"
 sentence-transformers = "*"
 pandas = "*"
+cuda-python = "*"
+psycopg2-binary = "*"
+psycopg2 = "*"
+pgvector = "*"
+openai = "*"
+ipython = "*"
+fastapi = "*"
+ray = {extras = ["serve"], version = "*"}
 
 [dev-packages]
 

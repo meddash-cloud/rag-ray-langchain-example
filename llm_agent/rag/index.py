@@ -2,10 +2,10 @@ import os
 from functools import partial
 from pathlib import Path
 
-import psycopg
+import psycopg2
 import ray
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from pgvector.psycopg import register_vector
+from pgvector.psycopg2 import register_vector
 from ray.data import ActorPoolStrategy
 
 from rag.config import EFS_DIR, EMBEDDING_DIMENSIONS
@@ -16,7 +16,7 @@ from rag.utils import execute_bash
 
 class StoreResults:
     def __call__(self, batch):
-        with psycopg.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
+        with psycopg2.connect(os.environ["DB_CONNECTION_STRING"]) as conn:
             register_vector(conn)
             with conn.cursor() as cur:
                 for text, source, embedding in zip(
