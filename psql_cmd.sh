@@ -1,1 +1,3 @@
-psql "postgresql://testUser:testPassword@localhost:15432/testDB" -c "$@"
+set -a
+source llm_agent/.env
+psql "$DB_CONNECTION_STRING" -c "$@"

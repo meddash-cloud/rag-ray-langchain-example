@@ -1,4 +1,4 @@
 #!/bin/bash
 set -a
-source .env
+source llm_agent/.env
 psql $DB_CONNECTION_STRING -c "CREATE EXTENSION vector;"
